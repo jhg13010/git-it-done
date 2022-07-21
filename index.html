@@ -19,6 +19,8 @@
   </header>
 
   <main class="flex-row justify-space-between">
+
+    <!--Creates column left for the form using bootstrap css framework-->
     <div class="col-12 col-md-4">
       <h3 class="card-header text-uppercase">Search by User</h3>
       <form id="user-form" class="card-body">
@@ -28,8 +30,10 @@
       </form>
     </div>
 
+    <!-- Creates column right for the data records-->
     <div class="col-12 col-md-8">
       <h2 class="subtitle">Showing Repositiories for: <span id="repo-search-term"></span></h2>
+      <!--Empty div to write data to using JS-->
       <div id="repos-container" class="list-group"></div>
     </div>
   </main>
