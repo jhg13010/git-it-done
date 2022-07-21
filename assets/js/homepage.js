@@ -28,20 +28,40 @@ var getUserRepos = function(user) {
     // format the github api url 
     var apiURL = "https://api.github.com/users/" + user + "/repos";
 
-    //make request to the URL and use the request response as a function parameter
-    fetch(apiURL).then(function(response) {
-        //reads the reponse as JSON and calls a function using the JSON data 
-        response.json().then(function(data) {
-            //calls the displayRepos function using the JSON data and the username from input form as parameters 
-            displayRepos(data, user);
-        });
+    //make request to the URL 
+    fetch(apiURL)
+        //use the request response as a function parameter
+        .then(function(response) {
+        //check to see if github found a user ==> 'ok' property will check to see if status code is in 200's
+        if (response.ok) {
+            //reads the reponse as JSON and calls a function using the JSON data 
+            response.json().then(function(data) {
+                //calls the displayRepos function using the JSON data and the username from input form as parameters 
+                displayRepos(data, user);
+            });
+        } else {
+            //if status code is in the 400's, a user hasn't be found
+            alert("Error: Github User Not Found");
+        }
+    })
+    //no semi-colon above "chains" .catch to the .then method 
+    //.catch will "catch" an error in running the function if there is a network issue 
+    .catch(function(error) {
+        alert("Unable to connect to GitHub");
     });
-}
+};
 
 //called from the getUserRepos function
 //repos = dataa 
 //searchTerm = username from input form
 var displayRepos = function(repos, searchTerm) {
+    //check to see if user has any repositories 
+    if (repos.length === 0) {
+        //if array is empty (array = 0), tell the requester 
+        repoContainerEl.textContent = "No repositories found";
+        //returns undefined to console
+        return;
+    };
     //sets up the repoContainerEl to be displayed, although blank - functionality comes later
     repoContainerEl.textContent = "";
     //sets up header for the search 
