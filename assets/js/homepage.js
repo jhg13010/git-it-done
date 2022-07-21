@@ -67,7 +67,25 @@ var displayRepos = function(repos, searchTerm) {
         //adds the titleEl to the repoEl
         repoEl.appendChild(titleEl);
 
-        //adds the repoEl to the container 
+        //creates status element that will be added to the repoEl 
+        var statusEl = document.createElement("span");
+        //assigns the class to ensure the "span" follows the css framework
+        statusEl.classList = "flew-row align-center";
+
+        //finds the open_issues_count attribute and inspects IF the value is greater than 0 
+        if (repos[i].open_issues_count > 0) {
+            //if greater than 0, pull an alert icon from the css framework and add the count of open issues 
+            statusEl.innerHTML = 
+                "<i class = 'fas fa-times status-icon icon-danger'></i>" + repos[i].open_issues_count + " issue(s)";
+        } else {
+            //if 0, pull an checkbox icon from the css framework
+            statusEl.innerHTML = "<i class = ' fas fa-check-square status-icon icon-success'></i>";
+        }
+
+        //append the icons and issues count to the repoEl
+        repoEl.appendChild(statusEl);
+
+        //adds the repoEl, with the title and status, to the container 
         repoContainerEl.appendChild(repoEl);
     }
     
