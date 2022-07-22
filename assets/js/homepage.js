@@ -120,7 +120,7 @@ var buttonClickHandler = function(event) {
     //variable to find the language button that was clicked using the data-language attribute
     var language = event.target.getAttribute("data-language");
     
-    if (langauge) {
+    if (language) {
         //call getFeatureRepos function to display repos with issues in a specific language
         getFeaturedRepos(language);
 
