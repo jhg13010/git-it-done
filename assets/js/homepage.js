@@ -75,9 +75,12 @@ var displayRepos = function(repos, searchTerm) {
         var repoName = repos[i].owner.login + "/" + repos[i].name;
 
         //creates an individual list element ("div") for each iteration [i] 
-        var repoEl = document.createElement("div");
+        var repoEl = document.createElement("a");
         //assigns the clases to ensure the "div" follows the css framework
         repoEl.classList = "list-item flex-row justify-space-between align-center";
+        //assigns link to the repo element to bring user to the single-repo page 
+        //the "?repo= + repoName" is the query that will be used to find the issues for a specific repo
+        repoEl.setAttribute("href", "./single-repo.html?repo=" + repoName);
 
         //creates the title element that will live as the header inside the repoEl 
         var titleEl = document.createElement("span");
