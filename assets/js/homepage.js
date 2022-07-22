@@ -119,5 +119,25 @@ var displayRepos = function(repos, searchTerm) {
     console.log(searchTerm);
 }
 
+//function to find repositories that are written in a specific language
+var getFeaturedRepos = function(language) {
+    //api endpoint URL to search for a repositories with issues, that are written in a certain langauge
+    var apiUrl = "https://api.github.com/search/repositories?q=" + language + "is:featured&sort=help-wanted-issues";
+
+    //requests feedback from URL and passes response through a function
+    fetch(apiUrl).then(function(response) {
+        //check to see if github found a user ==> 'ok' property will check to see if status code is in 200's
+        if (response.ok) {
+            //converts response to JSON and accesses the data
+            response.json().then(function(data) {
+                //calls displayRepos function using the items array as the repos to iterate through and the language as the search criteria 
+                displayRepos(data.items, language);
+            });
+        } else {
+            alert("Error: GitHub User Not Found");
+        };
+    });
+};
+
 //calls formSubmitHandler when a username has been submitted on the frontend form
 userFormEl.addEventListener("submit", formSubmitHandler);
