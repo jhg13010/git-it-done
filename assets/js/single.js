@@ -9,11 +9,17 @@ var getRepoName = function() {
     //Indicates repoName only wants the second array, thereby removing the uneeded content (i.e. "?repo=")
     var repoName = queryString.split("=")[1];
 
-    //calls the getRepoIssues function using the split repoName so that the "a" can call the right issues list in the linkEl href attribute
-    getRepoIssues(repoName);
+   if (repoName) {
+        //calls the getRepoIssues function using the split repoName so that the "a" can call the right issues list in the linkEl href attribute
+        getRepoIssues(repoName);
 
-    //assigns the repoName to the containter header; in this case the page header
-    repoNameEl.textContent = repoName;
+        //assigns the repoName to the containter header; in this case the page header
+        repoNameEl.textContent = repoName;
+
+   } else {
+        //if no repo was given, redirects to the homepage
+        document.location.replace("./index.html");
+   }
 }
 
 //displays warning when there are 30+ issues 
@@ -53,8 +59,8 @@ var getRepoIssues = function(repo) {
                 }
             });
         } else {
-            //alert that there was no data (404)
-            alert("There was a problem with your request");
+            //sends user back to homepage because there was a 404 data missing alert 
+            document.location.replace("./index.html");
         }
     });
 };
