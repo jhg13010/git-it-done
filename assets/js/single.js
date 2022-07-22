@@ -1,5 +1,20 @@
 var issueContainerEl = document.querySelector("#issues-container");
 var limitWarningEl = document.querySelector("#limit-warning");
+var repoNameEl = document.querySelector("#repo-name");
+
+var getRepoName = function() {
+    //uses the document object to find the search criteria from  the repoEl in homepage.js
+    var queryString = document.location.search;
+    //splits the search criteria into two arrays using the "=" as the split location 
+    //Indicates repoName only wants the second array, thereby removing the uneeded content (i.e. "?repo=")
+    var repoName = queryString.split("=")[1];
+
+    //calls the getRepoIssues function using the split repoName so that the "a" can call the right issues list in the linkEl href attribute
+    getRepoIssues(repoName);
+
+    //assigns the repoName to the containter header; in this case the page header
+    repoNameEl.textContent = repoName;
+}
 
 //displays warning when there are 30+ issues 
 var displayWarning = function(repo) {
@@ -88,4 +103,4 @@ var displayIssues = function(issues){
     };
 };
 
-getRepoIssues("angular/angular");
+getRepoName();
