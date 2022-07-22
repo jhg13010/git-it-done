@@ -111,12 +111,6 @@ var displayRepos = function(repos, searchTerm) {
         //adds the repoEl, with the title and status, to the container 
         repoContainerEl.appendChild(repoEl);
     }
-    
-    
-    //will console log the data in JSON form due to the response.json method in getUserRepos
-    console.log(repos);
-    //will console log the username that has been passed through the formSubmitHandler and the getUserRepos function
-    console.log(searchTerm);
 }
 
 //function to find repositories that are written in a specific language
