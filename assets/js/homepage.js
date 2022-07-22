@@ -4,6 +4,8 @@ var nameInputEl = document.querySelector("#username")
 var repoContainerEl = document.querySelector("#repos-container")
 //variable to add headers to the items in the righthand column of the page 
 var repoSearchTerm = document.querySelector("#repo-search-term")
+//variable to call received click event for language selector 
+var languageButtonsEl = document.querySelector("#language-buttons")
 
 var formSubmitHandler = function(event) {
     event.preventDefault();
@@ -113,6 +115,22 @@ var displayRepos = function(repos, searchTerm) {
     }
 }
 
+//function to receive click event from language buttons
+var buttonClickHandler = function(event) {
+    //variable to find the language button that was clicked using the data-language attribute
+    var language = event.target.getAttribute("data-language");
+    
+    if (langauge) {
+        //call getFeatureRepos function to display repos with issues in a specific language
+        getFeaturedRepos(language);
+
+        //reset content in form input box to prepare for new search 
+        repoContainerEl.textContent = "";
+    };
+
+     
+}
+
 //function to find repositories that are written in a specific language
 var getFeaturedRepos = function(language) {
     //api endpoint URL to search for a repositories with issues, that are written in a certain langauge
@@ -135,3 +153,5 @@ var getFeaturedRepos = function(language) {
 
 //calls formSubmitHandler when a username has been submitted on the frontend form
 userFormEl.addEventListener("submit", formSubmitHandler);
+//calls buttonClickHandler when a type of language is selected 
+languageButtonsEl.addEventListener("click", buttonClickHandler);
