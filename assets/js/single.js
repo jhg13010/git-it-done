@@ -1,4 +1,22 @@
 var issueContainerEl = document.querySelector("#issues-container");
+var limitWarningEl = document.querySelector("#limit-warning");
+
+//displays warning when there are 30+ issues 
+var displayWarning = function(repo) {
+    //creates the notification element 
+    limitWarningEl.textContent = "To see more than 30 issues, visit ";
+    //creates "a" element with a hyperlink to the repo
+    var linkEl = document.createElement("a");
+    //sets the text content
+    linkEl.textContent = "See more issues at Github.com";
+    //sets the hyperlink
+    linkEl.setAttribute("href", "https://github.com/" + repo + "/issues");
+    //opens a new tab
+    linkEl.setAttribute("target", "_blank");
+
+    //appends "a" element to the limit warnind div container 
+    limitWarningEl.appendChild(linkEl);
+};
 
 //executes the function on the search repository
 var getRepoIssues = function(repo) {
@@ -14,6 +32,10 @@ var getRepoIssues = function(repo) {
             response.json().then(function(data) {
                 //pass array of issues in JSON format to a new function that will pull out DOM elements 
                 displayIssues(data);
+
+                if (response.headers.get("Link")) {
+                    displayWarning(repo);
+                }
             });
         } else {
             //alert that there was no data (404)
@@ -28,8 +50,9 @@ var displayIssues = function(issues){
         issueContainerEl.textContent = "This page has no open issues!";
         return;
     };
+
     //for each issue in a repository 
-    for (var i=0; i < issues.length; i++) {
+    for (var i = 0; i < issues.length; i++) {
         //create an issue element with an "a" tag to enable linking an html reference 
         var issueEl = document.createElement("a");
         //assign classes to follow css framework
@@ -59,10 +82,10 @@ var displayIssues = function(issues){
         }
         //append the type to the issue container 
         issueEl.appendChild(typeEl);
-    };
 
-    //append individual issue containter to the overall issues container list 
-    issueContainerEl.appendChild(issueEl);
+        //append individual issue containter to the overall issues container list 
+        issueContainerEl.appendChild(issueEl);
+    };
 };
 
-getRepoIssues("facebook/react");
+getRepoIssues("angular/angular");
