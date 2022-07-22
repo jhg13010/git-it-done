@@ -23,6 +23,11 @@ var getRepoIssues = function(repo) {
 };
 
 var displayIssues = function(issues){
+    //provide user feedback if repo being searched has no issues 
+    if (issues.length === 0) {
+        issueContainerEl.textContent = "This page has no open issues!";
+        return;
+    };
     //for each issue in a repository 
     for (var i=0; i < issues.length; i++) {
         //create an issue element with an "a" tag to enable linking an html reference 
